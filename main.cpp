@@ -12,8 +12,18 @@ int main()
     std::cout << "Enter the size of matrix\n";
     int n;
     std::cin >> n;
-    std::vector< std::vector<double> > curr(n, std::vector<double> (n));
+    std::vector< std::vector<double> > curr(n, std::vector<double> (n + 1));
+    std::cout << "Enter the values\n";
+
+    for (int i = 0; i < n; ++i)
+        for (int j = 0; j < n + 1; ++j)
+            std::cin >> curr[i][j];
+
     matrix m(curr);
 
-    std::cout << "Hello, world\n";
+
+
+    m.print();
+
+    return 0;
 }
