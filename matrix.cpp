@@ -44,18 +44,6 @@ void matrix::column_multiplex_on_number(int k, double x)
 
 void matrix::string_devide_on_number(int k, double x)
 {
-    for (int i = 0; i < cell.size() + 1; ++i)
-        cell[k][i] /= x;
-}
-
-void matrix::column_devide_on_number(int k, double x)
-{
-    for (int i = 0; i < cell.size(); ++i)
-        cell[i][k] /= x;
-}
-
-void matrix::string_devide_on_number(int k, double x)
-{
     string_multiplex_on_number(k, 1.0/x);
 }
 
@@ -79,12 +67,12 @@ void matrix::column_add_to(int k, int l)
 void matrix::string_subtract_from(int k, int l)
 {
     for (int i = 0; i < cell.size() + 1; ++i)
-        cell[l][i] -= cell[k][i];
+        cell[k][i] -= cell[l][i];
 }
 void matrix::column_subtract_from(int k, int l)
 {
     for (int i = 0; i < cell.size(); ++i)
-        cell[i][l] -= cell[i][k];
+        cell[i][k] -= cell[i][l];
 }
 
 void matrix::cast_dioganal_form()
@@ -93,8 +81,8 @@ void matrix::cast_dioganal_form()
 
     while (its < cell.size())
     {
-        int it = 0;
-        while(its < cell.size() && cell[it][its] == 0)
+        int it = its;
+        while(it < cell.size() && cell[it][its] == 0)
             ++it;
         
         if (it != its)
@@ -112,7 +100,6 @@ void matrix::cast_dioganal_form()
             string_subtract_from(i, its);
             string_devide_on_number(its, x);
         }
-        
         ++its;
     }
 }

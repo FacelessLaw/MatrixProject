@@ -18,8 +18,6 @@ class matrix
         void column_multiplex_on_number(int, double);
         void string_devide_on_number(int, double);
         void column_devide_on_number(int, double);
-        void string_devide_on_number(int, double);
-        void column_devide_on_number(int, double);
         void string_add_to(int, int);
         void column_add_to(int, int);
         void string_subtract_from(int, int);

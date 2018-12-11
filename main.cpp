@@ -20,9 +20,7 @@ int main()
             std::cin >> curr[i][j];
 
     matrix m(curr);
-
-
-
+    m.cast_dioganal_form();
     m.print();
 
     return 0;
