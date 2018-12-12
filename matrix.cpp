@@ -23,6 +23,12 @@ void matrix::print(char type)
         }
     else if (type == 'd')
         std::cout << det << '\n';
+    else if (type == 's')
+    {
+        for (int i = 0; i < cell.size(); ++i)
+            std::cout << res[i] << ' ';
+        std::cout << '\n';
+    }
 }
 
 void matrix::set_size(int n)
@@ -89,7 +95,7 @@ void matrix::column_subtract_from(int k, int l, std::vector< std::vector<double>
         curr[i][k] -= curr[i][l];
 }
 
-void matrix::cast_equations()
+void matrix::cast_gauss_equations()
 {
     int its = 0;
     while (its < cell.size())
@@ -133,5 +139,70 @@ void matrix::cast_equations()
             det *= det_cell[its][its];
         }
         ++its;
+    }
+
+    for (int i = 0; i < cell.size(); ++i)
+        res.push_back(cell[i][cell.size()]);
+}
+
+
+void matrix::cast_gauss_with_main_el()
+{
+    double tmp;
+    
+    for (int i = 0; i < cell.size(); ++i)
+    {
+        double max = abs(cell[i][i]);
+        int max_i = i;
+        for (int j = i; j < cell.size(); ++j)
+            if(max < abs(cell[j][i]))
+            {
+                max = abs(cell[j][i]);
+                max_i = j;
+            }
+        
+        if(cell[max_i][i] == 0)
+        {
+            std::cout << "Wrong input. Matrix has no solutions";
+            return;
+        }
+        
+        if(i != max_i)
+        {
+            string_exchange(i, max_i, cell);
+            string_exchange(i, max_i, reverse_cell);
+            det *= -1;
+        }
+        tmp = cell[i][i];
+        det *= tmp;
+        cell[i][cell.size()] /= tmp;
+        for (int j = cell.size() - 1; j >= 0; --j)
+        {
+            cell[i][j] /= tmp;
+            reverse_cell[i][j] /= tmp;
+        }
+        for (int j = i + 1; j < cell.size(); ++j)
+        {
+            tmp = cell[j][i];
+            cell[j][cell.size()] -= tmp * cell[i][cell.size()];
+            for (int k = cell.size() - 1; k >= 0; --k)
+            {
+                cell[j][k] -= tmp * cell[i][k];
+                reverse_cell[j][k] -= tmp * reverse_cell[i][k];
+            }
+        }
+    }
+    
+    res.resize(cell.size());
+    res[cell.size() - 1] = cell[cell.size() - 1][cell.size()];
+    for (int i = cell.size() - 2; i >= 0; --i)
+    {
+        res[i] = cell[i][cell.size()];
+        for (int j = i + 1; j < cell.size(); ++j)
+        {
+            res[i] -= cell[i][j] * res[j];
+            for (int k = 0; k < cell.size(); ++k)
+                reverse_cell[i][k] -= cell[i][j] * reverse_cell[j][k];
+        }
     }
 }

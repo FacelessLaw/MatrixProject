@@ -20,7 +20,7 @@ int main()
             std::cin >> curr[i][j];
     
     matrix m(curr);
-    m.cast_equations();
+    m.cast_gauss_with_main_el();
     m.print('d');
 
     return 0;

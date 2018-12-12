@@ -7,11 +7,13 @@ class matrix
     std::vector< std::vector<double> > source_cell;
     std::vector< std::vector<double> > reverse_cell;
     std::vector< std::vector<double> > det_cell;
+    std::vector<double> res;
 
     public:
         void set_size(int);
         void print(char);
-        void cast_equations();
+        void cast_gauss_equations();
+        void cast_gauss_with_main_el();
         matrix(std::vector< std::vector<double> > _cell)
         {
             source_cell = _cell;
