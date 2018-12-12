@@ -1,34 +1,23 @@
 #include <iostream>
 #include "matrix.h"
 
-void matrix::print(char type)
+void matrix::print()
 {
-    if (type == 'r')
-        for (int i = 0; i < reverse_cell.size(); ++i)
-        {
-            for (int j = 0; j < reverse_cell[i].size(); ++j)
-            {
-                std::cout << reverse_cell[i][j] << ' ';
-            }
-            std::cout << '\n';
-        }
-    else if (type == 'a')
-        for (int i = 0; i < cell.size(); ++i)
-        {
-            for (int j = 0; j < cell[i].size(); ++j)
-            {
-                std::cout << cell[i][j] << ' ';
-            }
-            std::cout << '\n';
-        }
-    else if (type == 'd')
-        std::cout << det << '\n';
-    else if (type == 's')
+    std::cout << "Solution:\n";
+    for(int i = 0; i < res.size(); ++i)
+        std::cout << res[i] << ' ';
+    std::cout << '\n';
+
+    std::cout << "Determinant: " << det << '\n';
+    std::cout << "Reverse matrix :\n";
+    for (int i = 0; i < reverse_cell.size(); ++i)
     {
-        for (int i = 0; i < cell.size(); ++i)
-            std::cout << res[i] << ' ';
+        for (int j = 0; j < reverse_cell.size(); ++j)
+            std::cout << reverse_cell[i][j] << ' ';
         std::cout << '\n';
     }
+
+    std::cout << "Conditionality: " << cond << '\n';
 }
 
 void matrix::set_size(int n)
@@ -205,4 +194,28 @@ void matrix::cast_gauss_with_main_el()
                 reverse_cell[i][k] -= cell[i][j] * reverse_cell[j][k];
         }
     }
+}
+
+void matrix::cast_norm()
+{
+    double curr_nrm;
+    for (int i = 0; i < source_cell.size(); ++i)
+    {
+        curr_nrm = 0;
+        for (int j = 0; j < source_cell.size() - 1; ++j)
+            curr_nrm += abs(source_cell[i][j]);
+    
+        if (curr_nrm > source_nrm)
+            source_nrm = curr_nrm;
+    }
+    for (int i = 0; i < reverse_cell.size(); ++i)
+    {
+        curr_nrm = 0;
+        for (int j = 0; j < reverse_cell.size(); ++j)
+            curr_nrm += abs(reverse_cell[i][j]);
+        
+        if (curr_nrm > reverse_nrm)
+            reverse_nrm = curr_nrm;
+    }
+    cond = source_nrm * reverse_nrm;
 }

@@ -3,6 +3,9 @@
 class matrix
 {
     long double det = 1;
+    long double source_nrm = 0;
+    long double reverse_nrm = 0;
+    long double cond;
     std::vector< std::vector<double> > cell;
     std::vector< std::vector<double> > source_cell;
     std::vector< std::vector<double> > reverse_cell;
@@ -11,9 +14,11 @@ class matrix
 
     public:
         void set_size(int);
-        void print(char);
+        void print();
         void cast_gauss_equations();
         void cast_gauss_with_main_el();
+        void cast_norm();
+
         matrix(std::vector< std::vector<double> > _cell)
         {
             source_cell = _cell;
