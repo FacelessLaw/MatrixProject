@@ -18,10 +18,10 @@ int main()
     for (int i = 0; i < n; ++i)
         for (int j = 0; j < n + 1; ++j)
             std::cin >> curr[i][j];
-
+    
     matrix m(curr);
-    m.cast_dioganal_form();
-    m.print();
+    m.cast_equations();
+    m.print('d');
 
     return 0;
 }
